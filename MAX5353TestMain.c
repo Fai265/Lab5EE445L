@@ -30,6 +30,16 @@
 #include "MAX5353.h"
 #include "SysTick.h"
 
+typedef struct noteStruct {
+   int notePitch;				//What period to interrupt at
+   int noteLength;			//Translates to eigth, quarter, half, full
+												//(likely a 0-3 identifier)
+} note;
+
+typedef struct songStruct {
+   note notes[50];			//Song max length of 50 notes
+} song;
+
 // 12-bit 32-element sine wave
 // multiply each value by 2 to shift into bits 12:1 of SSI packet
 // three control bits in 15:13 are all zero for immediate DAC update

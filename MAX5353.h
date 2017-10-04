@@ -1,8 +1,11 @@
 // MAX5353.h
+// Cooper Carnahan and Faisal Mahmood
+// 10/04/17
+// Lab 5
+// Saadallah
+// 10/04/17
 // Runs on LM4F120/TM4C123
 // Use SSI0 to send a 16-bit code to the MAX5353.
-// Daniel Valvano
-// September 11, 2013
 
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
@@ -37,3 +40,27 @@ void DAC_Init(uint16_t data);
 // inputs:  voltage output (0 to 4095)
 // outputs: none
 void DAC_Out(uint16_t code);
+
+//********DAC_Out2*****************
+// Send data to Max5353 12-bit DAC
+// inputs:  voltage output (0 to 4095)
+// outputs: reply is returned
+// send the 16-bit code to the SSI, return a reply
+uint16_t DAC_Out2(uint16_t code);
+
+//********DAC_InitRaw*****************
+// Initialize Max5353 12-bit DAC with PA2,PA5 
+// with alternate functionality while PA3 is 
+// configured with regular functionality for
+// FSS usage
+// inputs:  initial voltage output (0 to 4095)
+// outputs: none
+// assumes: system clock rate less than 20 MHz
+void DAC_InitRaw(void);
+
+//********DAC_Out*****************
+// Send data to Max5353 12-bit DAC
+// inputs:  voltage output (0 to 4095)
+// outputs: none
+// send the 16-bit code to the SSI, 
+void DAC_OutRaw(uint16_t code);

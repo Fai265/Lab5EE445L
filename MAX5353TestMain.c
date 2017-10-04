@@ -29,6 +29,8 @@
 #include <stdint.h>
 #include "MAX5353.h"
 #include "SysTick.h"
+#include "Timer0A.h"
+#include "Switch.h"
 
 typedef struct noteStruct {
    int notePitch;				//What period to interrupt at

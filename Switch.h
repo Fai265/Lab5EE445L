@@ -16,10 +16,10 @@ inputs:
 outputs:
 	none
 ***************************************************************/
-void Switch_Init();
+void Switch_Init(int num, int interrupts);
 
 /***************************************************************
-Switch_Handle()
+Switch_Handler()
 	Called when a switch is pressed, handles user input.
 
 inputs:
@@ -28,4 +28,17 @@ inputs:
 outputs:
 	none
 ***************************************************************/
-void Switch_Handle(int switchID);
+void Switch_Handler(int switchID);
+
+/***************************************************************
+Switch_Handler()
+	Called when a switch is pressed, handles user input. Will 
+	either call function "play", "rewind", pause, or "change mode" 
+
+inputs:
+	switchID - Identifier of which switch was pressed
+
+outputs:
+	none
+***************************************************************/
+

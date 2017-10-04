@@ -3,10 +3,124 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-E:\Users\Cooper HDD\Documents\EE 360\Assignment 1\Lab5EE445L\MAX5353.uvproj
+C:\Users\Cooper\Documents\GitHub\Lab5EE445L\MAX5353.uvproj
 Project File Date:  10/04/2017
 
 <h2>Output:</h2>
-</pre>
-</body>
-</html>
+Rebuild target 'MAX5353'
+assembling startup.s...
+compiling MAX5353.c...
+compiling MAX5353TestMain.c...
+compiling SysTick.c...
+compiling Timer0A.c...
+compiling Switch.c...
+linking...
+Program Size: Code=1280 RO-data=96 RW-data=4 ZI-data=1124  
+".\MAX5353.axf" - 0 Error(s), 0 Warning(s).
+
+compiling Switch.c...
+linking...
+Program Size: Code=1280 RO-data=96 RW-data=4 ZI-data=1124  
+".\MAX5353.axf" - 0 Error(s), 1 Warning(s).
+tMain.c: 3 warnings, 0 errors
+compiling SysTick.c...
+compiling Timer0A.c...
+compiling Switch.c...
+linking...
+Program Size: Code=1280 RO-data=96 RW-data=4 ZI-data=1124  
+".\MAX5353.axf" - 0 Error(s), 3 Warning(s).
+// Enables Interrupts on GPIOPORTF
+Switch.c(45): warning:  #1-D: last line of file ends without a newline
+  }
+Switch.c: 1 warning, 1 error
+".\MAX5353.axf" - 1 Error(s), 4 Warning(s).
+Target not created
+123gh6pm_startup_ccs.c(193): warning:  #161-D: unrecognized #pragma
+  #pragma DATA_SECTION(g_pfnVectors, ".intvecs")
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(196): warning:  #1296-D: extended constant initialiser used
+      (void (*)(void))((uint32_t)&__STACK_TOP),
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(378): error:  #2901: Expected an inline assembly instruction
+            "    b.w     _c_int00");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(378): error:  #3081: expected end of line or a ";"
+            "    b.w     _c_int00");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(378): error:  #114: label "_c_int00" was referenced but not defined
+            "    b.w     _c_int00");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(579): warning:  #1267-D: Implicit physical register R0 should be defined as a variable
+           "    CPSID  I                  ; mask all (except faults)\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(579): error:  #3061: unrecognized instruction opcode
+           "    CPSID  I                  ; mask all (except faults)\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(587): warning:  #1267-D: Implicit physical register R0 should be defined as a variable
+        __asm  ("    MSR    PRIMASK, R0\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(587): error:  #549: variable "R0" is used before its value is set
+        __asm  ("    MSR    PRIMASK, R0\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c: 4 warnings, 5 errors
+".\MAX5353.axf" - 6 Error(s), 8 Warning(s).
+Target not created
+          Clock_Hour_Increment(1);
+..\Hardware\SwitchesAndLEDs.c(335): warning:  #223-D: function "digital_Print" declared implicitly
+                                          digital_Print(0);
+..\Hardware\SwitchesAndLEDs.c(338): warning:  #223-D: function "Alarm_Hour_Increment" declared implicitly
+                                    Alarm_Hour_Increment(1);
+..\Hardware\SwitchesAndLEDs.c(339): warning:  #223-D: function "digital_Print" declared implicitly
+                                          digital_Print(1);
+..\Hardware\SwitchesAndLEDs.c(349): warning:  #223-D: function "Clock_Hour_Increment" declared implicitly
+                                    Clock_Hour_Increment(5);
+..\Hardware\SwitchesAndLEDs.c(350): warning:  #223-D: function "digital_Print" declared implicitly
+                                          digital_Print(0);
+..\Hardware\SwitchesAndLEDs.c(353): warning:  #223-D: function "Alarm_Hour_Increment" declared implicitly
+                                          Alarm_Hour_Increment(5);
+..\Hardware\SwitchesAndLEDs.c(354): warning:  #223-D: function "digital_Print" declared implicitly
+                                          digital_Print(1);
+..\Hardware\SwitchesAndLEDs.c(364): warning:  #223-D: function "Clock_Minute_Increment" declared implicitly
+                                                Clock_Minute_Increment(1);
+..\Hardware\SwitchesAndLEDs.c(365): warning:  #223-D: function "digital_Print" declared implicitly
+                                                digital_Print(0);
+..\Hardware\SwitchesAndLEDs.c(369): warning:  #223-D: function "Alarm_Minute_Increment" declared implicitly
+                                                Alarm_Minute_Increment(1);
+..\Hardware\SwitchesAndLEDs.c(370): warning:  #223-D: function "digital_Print" declared implicitly
+                                                digital_Print(1);
+..\Hardware\SwitchesAndLEDs.c(381): warning:  #223-D: function "Clock_Minute_Increment" declared implicitly
+                                                Clock_Minute_Increment(5);
+..\Hardware\SwitchesAndLEDs.c(382): warning:  #223-D: function "digital_Print" declared implicitly
+                                                digital_Print(0);
+..\Hardware\SwitchesAndLEDs.c(385): warning:  #223-D: function "Alarm_Minute_Increment" declared implicitly
+                                                Alarm_Minute_Increment(5);
+..\Hardware\SwitchesAndLEDs.c(386): warning:  #223-D: function "digital_Print" declared implicitly
+                                                digital_Print(1);
+..\Hardware\SwitchesAndLEDs.c(391): warning:  #223-D: function "EnableInterrupts" declared implicitly
+                  EnableInterrupts();
+..\Hardware\SwitchesAndLEDs.c(396): warning:  #223-D: function "Move_Up" declared implicitly
+                                Move_Up(currentMenu);
+..\Hardware\SwitchesAndLEDs.c(399): warning:  #223-D: function "Move_Down" declared implicitly
+                                Move_Down(currentMenu);
+..\Hardware\SwitchesAndLEDs.c(405): warning:  #1-D: last line of file ends without a newline
+  }
+..\Hardware\SwitchesAndLEDs.c: 31 warnings, 1 error
+compiling Switch.c...
+Switch.c(43): error:  #20: identifier "NVIC_EN0_INT30" is undefined
+                NVIC_EN0_R |= NVIC_EN0_INT30;   // Enables Interrupts on GPIOPORTF
+Switch.c(45): warning:  #1-D: last line of file ends without a newline
+  }
+Switch.c: 1 warning, 1 error
+compiling tm4c123gh6pm_startup_ccs.c...
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(193): warning:  #161-D: unrecognized #pragma
+  #pragma DATA_SECTION(g_pfnVectors, ".intvecs")
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(196): warning:  #1296-D: extended constant initialiser used
+      (void (*)(void))((uint32_t)&__STACK_TOP),
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(378): error:  #2901: Expected an inline assembly instruction
+            "    b.w     _c_int00");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(378): error:  #3081: expected end of line or a ";"
+            "    b.w     _c_int00");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(378): error:  #114: label "_c_int00" was referenced but not defined
+            "    b.w     _c_int00");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(579): warning:  #1267-D: Implicit physical register R0 should be defined as a variable
+           "    CPSID  I                  ; mask all (except faults)\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(579): error:  #3061: unrecognized instruction opcode
+           "    CPSID  I                  ; mask all (except faults)\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(587): warning:  #1267-D: Implicit physical register R0 should be defined as a variable
+        __asm  ("    MSR    PRIMASK, R0\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c(587): error:  #549: variable "R0" is used before its value is set
+        __asm  ("    MSR    PRIMASK, R0\n");
+..\Lab1EE445L\Lab 1\tm4c123gh6pm_startup_ccs.c: 4 warnings, 5 errors
+".\MAX5353.axf" - 7 Error(s), 37 Warning(s).
+Target not created

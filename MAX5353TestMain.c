@@ -32,15 +32,46 @@
 #include "Timer0A.h"
 #include "Switch.h"
 
-typedef struct noteStruct {
-   int notePitch;				//What period to interrupt at
-   int noteLength;			//Translates to eigth, quarter, half, full
-												//(likely a 0-3 identifier)
-} note;
+#define A2  109
+#define A2s 116
+#define B2  123
+#define C3  130
+#define C3s 138
+#define D3  146
+#define D3s 155
+#define E3  164
+#define F3  174
+#define F3s 184
+#define G3  195
+#define G3s 207
+#define A3  219
+#define A3s 233
+#define B3  246
+#define C4  261
+#define C4s 277
+#define D4  293
+#define D4s 311
+#define E4  329
+#define F4  349
+#define F4s 369
+#define G4  391
+#define G4s 415
+#define A4  440
+#define A4s 466
+#define B4  493
+#define C5  523
+#define C5s 554
+#define D5  587
+#define D5s 622
+#define E5  659
+#define F5  698
+#define F5s 739
+#define G5  783
+#define G5s 830
+#define A5  880
 
-typedef struct songStruct {
-   note notes[50];			//Song max length of 50 notes
-} song;
+
+
 
 // 12-bit 32-element sine wave
 // multiply each value by 2 to shift into bits 12:1 of SSI packet
@@ -58,7 +89,28 @@ int main(void){
   uint32_t i=0;
   DAC_Init(0x1000);                  // initialize with command: Vout = Vref
   SysTick_Init();
+	note StarWarsNotes[100] = {	//Each measure on a different line
+    {D4, 1}, {D4, 1}, {D4, 1}, 
+    {G4, 3}, {D5, 3}, 
+    {C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C4, 1}, {B4, 1}, {C4, 1}, {A4, 3}, {D5, 1}, {D5, 1},
+		{G4, 3}, {D5, 3}, 
+    {C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C4, 1}, {B4, 1}, {C4, 1}, {A4, 2}, {0, 2}, {D5, 1}, {D5, 1},
+		{E4, 3}, {C4, 1}, {B4, 1}, {A4, 1}, {G4, 1},
+		{G4, 1}, {A4, 1}, {B4, 1}, {A4, 1}, {E4, 1}, {F4s, 2}, {D4, 1}, {D4, 1},
+		{E4, 3}, {C4, 1}, {B4, 1}, {A4, 1}, {G4, 1},
+		{G5, 4}
+	};
+	song StarWars = {.tempo = 71, .notes = StarWarsNotes};
+	//StarWars.notes;
   while(1){
+		
+		
+		Timer0A_Init((*DAC_Out), StarWars.notes[i].notePitch);
+		SysTick_Wait10ms(StarWars.notes[i].noteLength);
     DAC_Out(wave[i&0x1F]);
     i = i + 1;
     // calculated frequencies are not exact, due to the impreciseness of delay loops
@@ -71,7 +123,7 @@ int main(void){
 //    SysTick_Wait(19);                // 26.3 kHz sine wave (actually 8,500 Hz)
 //    SysTick_Wait(64);                // 7.81 kHz sine wave (actually 4,800 Hz)
 //    SysTick_Wait(99);                // 5.05 kHz sine wave (actually 3,500 Hz)
-    SysTick_Wait(1136);              // 440 Hz sine wave (actually 420 Hz)
+//    SysTick_Wait(1136);              // 440 Hz sine wave (actually 420 Hz)
 //    SysTick_Wait(50000);             // 10 Hz sine wave (actually 9.9 Hz)
   }
 }

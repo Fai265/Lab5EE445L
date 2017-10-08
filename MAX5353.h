@@ -28,6 +28,18 @@
 // SSI0Tx (DIN, pin 3) connected to PA5
 // see Figure 7.19 for complete schematic
 
+
+typedef struct note{
+   int notePitch;				//What period to interrupt at
+   int noteLength;			//Translates to eigth, quarter, half, full
+												//(likely a 0-3 identifier)
+} note;
+
+typedef struct song{
+	 int tempo;
+   struct note * notes;			//Song max length of 100 notes
+} song;
+
 //********DAC_Init*****************
 // Initialize Max5353 12-bit DAC
 // inputs:  initial voltage output (0 to 4095)

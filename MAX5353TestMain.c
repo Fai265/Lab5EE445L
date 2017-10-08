@@ -109,7 +109,7 @@ int main(void){
   while(1){
 		
 		
-		Timer0A_Init((*DAC_Out), StarWars.notes[i].notePitch);
+		Timer0A_Init((*DAC_Out), (80000000 / StarWars.notes[i].notePitch));
 		SysTick_Wait10ms(StarWars.notes[i].noteLength);
     DAC_Out(wave[i&0x1F]);
     i = i + 1;

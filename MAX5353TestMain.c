@@ -102,11 +102,11 @@ void portF_Init(void){
 	GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF  
 }
 int main(void){
+	PLL_Init(Bus80Mhz);
   i=0;															 // This is the index of the song array
 	portF_Init();
   DAC_Init(0x1000);                  // initialize with command: Vout = Vref
   SysTick_Init();
-	PLL_Init(Bus80Mhz);
 	//EnableInterrupts();
 	play = 1;
 	note StarWarsNotes[100] = {	//Each measure on a different line

@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "..\Systick_4C123\Systick.h"
-#include "MAX5353TestMain.c"
+#include "Music.h"
+#include "Timer0A.h"  //This is for the Change_Mode() function
 
 void PD0_Handler(void);
 void PD1_Handler(void);
@@ -50,22 +51,23 @@ void GPIO_PortF_Switch_Init(int switchNum, int interrupts){
   }
 }
 
+//if PF4 is pressed, change instrument
 void GPIOPortF_Handler(void){
   if((GPIO_PORTF_RIS_R&0x10)==0x10){ // if an interrupt on PF4
     GPIO_PORTF_IM_R &= ~0x10;        // disarm interrupt on PF4
+		GPIO_PORTF_ICR_R |= 0x10;        // Clears interrupt on PF4
 		Change_Mode();
 		SysTick_Wait10ms(1);						 // debounce delay
-		GPIO_PORTF_ICR_R |= 0x10;        // Clears interrupt on PF4
 		GPIO_PORTF_IM_R |= 0x10;         // arm interrupt on PF4
 
 	}
-	if((GPIO_PORTF_RIS_R&0x01)==0x01){ // if an interrupt on PF0
-		GPIO_PORTF_IM_R &= ~0x01;        // disarm interrupt on PF0 
-    //Play();
-		SysTick_Wait10ms(1);						 // debounce delay
-    GPIO_PORTF_ICR_R |= 0x01;        // Clears interrupt on PF0
-		GPIO_PORTF_IM_R |= 0x01;         // arm interrupt on PF0
-  }
+//	if((GPIO_PORTF_RIS_R&0x01)==0x01){ // if an interrupt on PF0
+//		GPIO_PORTF_IM_R &= ~0x01;        // disarm interrupt on PF0 
+//    //Play();
+//		SysTick_Wait10ms(1);						 // debounce delay
+//    GPIO_PORTF_ICR_R |= 0x01;        // Clears interrupt on PF0
+//		GPIO_PORTF_IM_R |= 0x01;         // arm interrupt on PF0
+//  }
 }
 
 
@@ -92,7 +94,7 @@ void GPIO_PortD_Switch_Init(int numSwitches){
 	//GPIO_PORTD_IEV_R &= Or;
 	GPIO_PORTD_ICR_R |= Or;       // Clears Interrupt on PD0->PDnumSwitches
 	GPIO_PORTD_IM_R |= Or;        // Arms interrupts on PD0->PDnumSwitches
-  NVIC_PRI0_R = NVIC_PRI0_R = (NVIC_PRI4_R&0x00FFFFFF)|0x40000000; //Priority 3
+  NVIC_PRI0_R = NVIC_PRI0_R = (NVIC_PRI4_R&0x00FFFFFF)|0x20000000; //Priority 2
 	NVIC_EN0_R |= 1<<3;           // Enables Interrupts on GPIOPORTD
 }
 
@@ -110,30 +112,24 @@ void GPIOPortD_Handler(void){
 
 void PD0_Handler(void){
 	GPIO_PORTD_IM_R &= ~0x01;        // disarm interrupt on PD0
+	GPIO_PORTD_ICR_R |= 0x01;        // Clears interrupt on PD0
 	SysTick_Wait10ms(1);						 // debounce delay
-	GPIO_PORTD_ICR_R |= 0x01;        // Clears interrupt on PD0
 	GPIO_PORTD_IM_R |= 0x01;         // arm interrupt on PD0
-	GPIO_PORTD_ICR_R |= 0x01;        // Clears interrupt on PD0
-
 	pauseSong();
 }
 
 void PD1_Handler(void){
 	GPIO_PORTD_IM_R &= ~0x02;        // disarm interrupt on PD1
-	SysTick_Wait10ms(1);						 // debounce delay
 	GPIO_PORTD_ICR_R |= 0x02;        // Clears interrupt on PD1
+	SysTick_Wait10ms(1);						 // debounce delay
 	GPIO_PORTD_IM_R |= 0x02;         // arm interrupt on PD1
-  GPIO_PORTD_ICR_R |= 0x02;        // Clears interrupt on PD1
-	
 	playSong();
 }
 
 void PD2_Handler(void){
 	GPIO_PORTD_IM_R &= ~0x04;        // disarm interrupt on PD2
+	GPIO_PORTD_ICR_R |= 0x04;        // Clears interrupt on PD2	
 	SysTick_Wait10ms(1);						 // debounce delay
-	GPIO_PORTD_ICR_R |= 0x04;        // Clears interrupt on PD2
 	GPIO_PORTD_IM_R |= 0x04;         // arm interrupt on PD2
-  GPIO_PORTD_ICR_R |= 0x04;        // Clears interrupt on PD2
-	
 	rewindSong();
 }

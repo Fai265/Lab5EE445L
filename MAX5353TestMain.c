@@ -32,7 +32,8 @@
 #include "Timer0A.h"
 #include "Switch.h"
 #include "../inc/tm4c123gh6pm.h"
-#inclue "PLL.h"
+#include "Music.h"
+#include "..\Lab3EE445L\src\PLL.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010)) //Blue LED
 
@@ -75,7 +76,25 @@
 #define A5  880
 
 
-static uint8_t play = 0;
+	note StarWarsNotes[100] = {	//Each measure on a different line
+    {D4, 1}, {D4, 1}, {D4, 1}, 
+    {G4, 3}, {D5, 3}, 
+    {C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {C5, 1}, {A4, 3}, {D5, 1}, {D5, 1},
+		{G4, 3}, {D5, 3}, 
+    {C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {C5, 1}, {A4, 2}, {0, 2}, {D5, 1}, {D5, 1},
+		{E4, 3}, {C5, 1}, {B4, 1}, {A4, 1}, {G4, 1},
+		{G4, 1}, {A4, 1}, {B4, 1}, {A4, 1}, {E4, 1}, {F4s, 2}, {D4, 1}, {D4, 1},
+		{E4, 3}, {C5, 1}, {B4, 1}, {A4, 1}, {G4, 1},
+		{G5, 4}
+	};
+	song StarWars = {.tempo = 120, .notes = StarWarsNotes, .songLength=100};
+
+
+//static uint8_t play = 0;
 static uint32_t i;
 
 void EnableInterrupts(void);
@@ -102,31 +121,19 @@ void portF_Init(void){
 	GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF  
 }
 int main(void){
-	PLL_Init(Bus80Mhz);
+	PLL_Init(Bus80MHz);
   i=0;															 // This is the index of the song array
 	portF_Init();
   DAC_Init(0x1000);                  // initialize with command: Vout = Vref
   SysTick_Init();
-	//EnableInterrupts();
-	play = 1;
-	note StarWarsNotes[100] = {	//Each measure on a different line
-    {D4, 1}, {D4, 1}, {D4, 1}, 
-    {G4, 3}, {D5, 3}, 
-    {C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C5, 1}, {B4, 1}, {C5, 1}, {A4, 3}, {D5, 1}, {D5, 1},
-		{G4, 3}, {D5, 3}, 
-    {C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C5, 1}, {B4, 1}, {C5, 1}, {A4, 2}, {0, 2}, {D5, 1}, {D5, 1},
-		{E4, 3}, {C5, 1}, {B4, 1}, {A4, 1}, {G4, 1},
-		{G4, 1}, {A4, 1}, {B4, 1}, {A4, 1}, {E4, 1}, {F4s, 2}, {D4, 1}, {D4, 1},
-		{E4, 3}, {C5, 1}, {B4, 1}, {A4, 1}, {G4, 1},
-		{G5, 4}
-	};
-	song StarWars = {.tempo = 120, .notes = StarWarsNotes};
+	GPIO_PortF_Switch_Init(4, 1);
+  GPIO_PortD_Switch_Init(3);
+	EnableInterrupts();
+	//play = 1;    //IF THINGS DON'T WORK UNCOMMENT THIS
+
 	while(1){
-		while(play == 1){
+		while(Playing() == true){
+			i=Song_Index_Return();  //comment this out if things don't work
 			PF2 ^= 0x04;
 			int wait = 60000 / StarWars.tempo;	//60000 milliseconds in a minute, divide by tempo to get
 																					//Milliseconds per beat
@@ -134,12 +141,13 @@ int main(void){
 			//i.e. Quarter Note: noteLength = 2. 2^2 = 4 / 4 = 1. Quarter Note gets full wait
 			//Eigth gets half wait, Half gets double, Full gets quadruple
 			
-			wait = (wait / 8) * exp;
+			wait = (wait / 4) * exp;
 			wait /= 10;	//Make it compatible with SysTick_Wait10ms
 			
 			Timer0A_Init((*DAC_Out), (800000 / StarWars.notes[i].notePitch), 0);	//Interrupt at Note frequency
 			
-			i = ((i + 1) % 100);
+			//i = ((i + 1) % 100);  //uncomment this out if things don't work
+			Song_Index_Increment(StarWars.songLength);
 			if(StarWars.notes[i].noteLength == 0){
 				wait = 0;
 			}
@@ -148,24 +156,24 @@ int main(void){
 	}
 }
 
-void pauseSong(){
-	//Disable Interrupts
-	TIMER0_CTL_R = 0x00000000;    //disable TIMER0A
-	NVIC_ST_CTRL_R = 0;           //disable SysTick
-	play = 0;
-}
+//void pauseSong(){
+//	//Disable Interrupts
+//	TIMER0_CTL_R = 0x00000000;    //disable TIMER0A
+//	NVIC_ST_CTRL_R = 0;           //disable SysTick
+//	play = 0;
+//}
 
-void playSong(){
-	//Enable Interrupts
-	TIMER0_CTL_R = 0x00000001;    //enable TIMER0A
-																//enable SysTick with core clock
-	NVIC_ST_CTRL_R = NVIC_ST_CTRL_ENABLE+NVIC_ST_CTRL_CLK_SRC;
-	play = 1;
-}
+//void playSong(){
+//	//Enable Interrupts
+//	TIMER0_CTL_R = 0x00000001;    //enable TIMER0A
+//																//enable SysTick with core clock
+//	NVIC_ST_CTRL_R = NVIC_ST_CTRL_ENABLE+NVIC_ST_CTRL_CLK_SRC;
+//	play = 1;
+//}
 
-void rewindSong(){
-	i = 0;
-	pauseSong();
-}
+//void rewindSong(){
+//	i = 0;
+//	pauseSong();
+//}
 
 

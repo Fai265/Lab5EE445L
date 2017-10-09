@@ -80,7 +80,6 @@ void Timer0A_Init(void(*task)(uint16_t), uint32_t period, uint8_t instrument){lo
   NVIC_EN0_R = 1<<19;           // 9) enable IRQ 19 in NVIC
   TIMER0_CTL_R = 0x00000001;    // 10) enable TIMER0A
   EndCritical(sr);
-	
 	i = 0;
 }
 

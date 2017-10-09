@@ -72,6 +72,8 @@ outputs:
 ***************************************************************/
 void Pause(void);
 
+void GPIO_PortF_Switch_Init(int switchNum, int interrupts);
+
 void GPIO_PortD_Switch_Init(int numSwitches);
 
 void GPIOPortD_Handler(void);

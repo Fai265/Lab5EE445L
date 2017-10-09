@@ -29,16 +29,16 @@
 // see Figure 7.19 for complete schematic
 
 
-typedef struct note{
-   int notePitch;				//What period to interrupt at
-   int noteLength;			//Translates to eigth, quarter, half, full
-												//1 = Eigth, 2 = Quarter, 3 = Half, 4 = Full
-} note;
+//typedef struct note{
+//   int notePitch;				//What period to interrupt at
+//   int noteLength;			//Translates to eigth, quarter, half, full
+//												//1 = Eigth, 2 = Quarter, 3 = Half, 4 = Full
+//} note;
 
-typedef struct song{
-	 int tempo;
-   struct note * notes;			//Song max length of 100 notes
-} song;
+//typedef struct song{
+//	 int tempo;
+//   struct note * notes;			//Song max length of 100 notes
+//} song;
 
 //********DAC_Init*****************
 // Initialize Max5353 12-bit DAC

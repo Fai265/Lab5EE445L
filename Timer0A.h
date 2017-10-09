@@ -7,3 +7,16 @@ void Timer0A_Init(void(*task)(uint16_t), uint32_t period, uint8_t instrument);
 
 
 void Timer0A_Handler(void);
+
+
+/***************************************************************
+Change_Mode()
+	Changes the current instrument
+
+inputs:
+	none
+
+outputs:
+	none
+***************************************************************/
+void Change_Mode(void);

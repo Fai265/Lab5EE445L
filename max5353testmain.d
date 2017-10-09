@@ -4,4 +4,3 @@
 .\max5353testmain.o: SysTick.h
 .\max5353testmain.o: Timer0A.h
 .\max5353testmain.o: Switch.h
-.\max5353testmain.o: ../inc/tm4c123gh6pm.h

@@ -26,7 +26,7 @@
  http://users.ece.utexas.edu/~valvano/
  */
 #include <stdint.h>
-#include "..//inc//tm4c123gh6pm.h"
+#include "../inc/tm4c123gh6pm.h"
 #include "MAX5353.h"
 
 const unsigned short Bassoon64[64]={
@@ -46,6 +46,8 @@ const unsigned short Trumpet64[64]={
   558, 1014, 1245, 1260, 1145, 1063, 984, 934, 960, 1027, 1077, 1081, 1074, 1064, 1042, 1010, 974, 968, 974, 994, 1039, 
   1094, 1129, 1125, 1092, 1056, 1056, 1082, 1059, 1046, 1058, 1061, 1045, 1034, 1050, 1094, 1112, 1092, 1063, 1053, 1065, 1052, 992};
 
+	
+static int currentInstrument=0;
 static int i;
 
 void DisableInterrupts(void); // Disable interrupts
@@ -84,6 +86,19 @@ void Timer0A_Init(void(*task)(uint16_t), uint32_t period, uint8_t instrument){lo
 
 void Timer0A_Handler(void){
   TIMER0_ICR_R = TIMER_ICR_TATOCINT;// acknowledge timer0A timeout
-  (*PeriodicTask)(Trumpet64[i]);                // execute user task
+	if(currentInstrument==0){
+    (*PeriodicTask)(Trumpet64[i]);                // execute user task
+	}
+	if(currentInstrument==1){
+	  (*PeriodicTask)(Bassoon64[i]);                // execute user task
+	}
+  if(currentInstrument==2){
+		(*PeriodicTask)(Oboe64[i]);                // execute user task
+	}
 	i = ((i + 1) % 64);
+}
+
+void Change_Mode(void){
+	currentInstrument++;
+	currentInstrument%=3;
 }

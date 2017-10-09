@@ -7,7 +7,8 @@
 void PD0_Handler(void);
 void PD1_Handler(void);
 void PD2_Handler(void);
-void GPIO_PortD_Switch_Init(int switchNum, int interrupts){
+
+void GPIO_PortF_Switch_Init(int switchNum, int interrupts){
   SYSCTL_RCGCGPIO_R |= 0x20;        // 1) activate clock for Port F
   while((SYSCTL_PRGPIO_R&0x20)==0){}; // allow time for clock to start
 		GPIO_PORTF_LOCK_R=0x4C4F434B;			// unlocks CR register to allow PUR to be activated
@@ -48,10 +49,11 @@ void GPIO_PortD_Switch_Init(int switchNum, int interrupts){
 		NVIC_EN0_R |= 1<<30;            // Enables Interrupts on GPIOPORTF
   }
 }
+
 void GPIOPortF_Handler(void){
   if((GPIO_PORTF_RIS_R&0x10)==0x10){ // if an interrupt on PF4
     GPIO_PORTF_IM_R &= ~0x10;        // disarm interrupt on PF4
-		//Pause();
+		Change_Mode();
 		SysTick_Wait10ms(1);						 // debounce delay
 		GPIO_PORTF_ICR_R |= 0x10;        // Clears interrupt on PF4
 		GPIO_PORTF_IM_R |= 0x10;         // arm interrupt on PF4
@@ -112,7 +114,7 @@ void PD0_Handler(void){
 	GPIO_PORTD_ICR_R |= 0x01;        // Clears interrupt on PD0
 	GPIO_PORTD_IM_R |= 0x01;         // arm interrupt on PD0
 	GPIO_PORTD_ICR_R |= 0x01;        // Clears interrupt on PD0
-	
+
 	pauseSong();
 }
 

@@ -435,6 +435,16 @@
               <FileType>5</FileType>
               <FilePath>..\inc\tm4c123gh6pm.h</FilePath>
             </File>
+            <File>
+              <FileName>Switch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Switch.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer0A.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Timer0A.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

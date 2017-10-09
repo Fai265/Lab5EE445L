@@ -32,7 +32,7 @@
 typedef struct note{
    int notePitch;				//What period to interrupt at
    int noteLength;			//Translates to eigth, quarter, half, full
-												//(likely a 0-3 identifier)
+												//1 = Eigth, 2 = Quarter, 3 = Half, 4 = Full
 } note;
 
 typedef struct song{

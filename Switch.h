@@ -71,3 +71,14 @@ outputs:
 	none
 ***************************************************************/
 void Pause(void);
+
+void GPIO_PortD_Switch_Init(int numSwitches);
+
+void GPIOPortD_Handler(void);
+
+void PD0_Handler(void);
+
+void PD1_Handler(void);
+
+void PD2_Handler(void);
+

@@ -61,7 +61,7 @@ void (*PeriodicTask)(uint16_t);   // user function
 // Inputs:  task is a pointer to a user function
 //          period in units (1/clockfreq), 32 bits
 // Outputs: none
-void Timer0A_Init(void(*task)(uint16_t), uint32_t period){long sr;
+void Timer0A_Init(void(*task)(uint16_t), uint32_t period, uint8_t instrument){long sr;
   sr = StartCritical(); 
   SYSCTL_RCGCTIMER_R |= 0x01;   // 0) activate TIMER0
   PeriodicTask = task;          // user function
@@ -84,6 +84,6 @@ void Timer0A_Init(void(*task)(uint16_t), uint32_t period){long sr;
 
 void Timer0A_Handler(void){
   TIMER0_ICR_R = TIMER_ICR_TATOCINT;// acknowledge timer0A timeout
-  (*PeriodicTask)(Bassoon64[i]);                // execute user task
+  (*PeriodicTask)(Trumpet64[i]);                // execute user task
 	i = ((i + 1) % 64);
 }

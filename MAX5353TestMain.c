@@ -31,6 +31,9 @@
 #include "SysTick.h"
 #include "Timer0A.h"
 #include "Switch.h"
+#include "../inc/tm4c123gh6pm.h"
+
+#define PF2             (*((volatile uint32_t *)0x40025010)) //Blue LED
 
 #define A2  109
 #define A2s 116
@@ -71,7 +74,10 @@
 #define A5  880
 
 
+static uint8_t play = 0;
+static uint32_t i;
 
+void EnableInterrupts(void);
 
 // 12-bit 32-element sine wave
 // multiply each value by 2 to shift into bits 12:1 of SSI packet
@@ -85,45 +91,78 @@ const uint16_t wave[32] = {
   3751*2,3496*2,3186*2,2832*2,2448*2,2048*2,1648*2,1264*2,910*2,600*2,345*2,
   156*2,39*2,0*2,39*2,156*2,345*2,600*2,910*2,1264*2,1648*2};
 
+void portF_Init(void){
+	SYSCTL_RCGCGPIO_R |= 0x20;
+	while((SYSCTL_PRGPIO_R & 0x20) == 0);
+	
+	GPIO_PORTF_DIR_R |= 0x06;   // make PF2 out (built-in blue LED)
+	GPIO_PORTF_AFSEL_R &= ~0x06;// disable alt funct on PF2
+	GPIO_PORTF_DEN_R |= 0x06;   // enable digital I/O on PF2                             
+	GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF00F)+0x00000000; // configure PF2 as GPIO
+	GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF  
+}
 int main(void){
-  uint32_t i=0;
+  i=0;
+	portF_Init();
   DAC_Init(0x1000);                  // initialize with command: Vout = Vref
   SysTick_Init();
+	//EnableInterrupts();
+	play = 1;
 	note StarWarsNotes[100] = {	//Each measure on a different line
     {D4, 1}, {D4, 1}, {D4, 1}, 
     {G4, 3}, {D5, 3}, 
-    {C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C4, 1}, {B4, 1}, {C4, 1}, {A4, 3}, {D5, 1}, {D5, 1},
+    {C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {C5, 1}, {A4, 3}, {D5, 1}, {D5, 1},
 		{G4, 3}, {D5, 3}, 
-    {C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C4, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
-		{C4, 1}, {B4, 1}, {C4, 1}, {A4, 2}, {0, 2}, {D5, 1}, {D5, 1},
-		{E4, 3}, {C4, 1}, {B4, 1}, {A4, 1}, {G4, 1},
+    {C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {A4, 1}, {G5, 3}, {D5, 2},
+		{C5, 1}, {B4, 1}, {C5, 1}, {A4, 2}, {0, 2}, {D5, 1}, {D5, 1},
+		{E4, 3}, {C5, 1}, {B4, 1}, {A4, 1}, {G4, 1},
 		{G4, 1}, {A4, 1}, {B4, 1}, {A4, 1}, {E4, 1}, {F4s, 2}, {D4, 1}, {D4, 1},
-		{E4, 3}, {C4, 1}, {B4, 1}, {A4, 1}, {G4, 1},
+		{E4, 3}, {C5, 1}, {B4, 1}, {A4, 1}, {G4, 1},
 		{G5, 4}
 	};
-	song StarWars = {.tempo = 71, .notes = StarWarsNotes};
-	//StarWars.notes;
-  while(1){
-		
-		
-		Timer0A_Init((*DAC_Out), (80000000 / StarWars.notes[i].notePitch));
-		SysTick_Wait10ms(StarWars.notes[i].noteLength);
-    DAC_Out(wave[i&0x1F]);
-    i = i + 1;
-    // calculated frequencies are not exact, due to the impreciseness of delay loops
-    // assumes using 16 MHz PIOSC (default setting for clock source)
-    // maximum frequency with 16 MHz PIOSC: (8,000,000 bits/1 sec)*(1 sample/16 bits)*(1 wave/32 sample) = 15,625 Hz
-    // maximum frequency with 20 MHz PLL: (10,000,000 bits/1 sec)*(1 sample/16 bits)*(1 wave/32 sample) = 19,531.25 Hz
-//    SysTick_Wait(0);                 // ?? kHz sine wave (actually 12,000 Hz)
-//    SysTick_Wait(9);                 // 55.6 kHz sine wave (actually 10,000 Hz)
-//    SysTick_Wait(15);                // 33.3 kHz sine wave (actually 8,500 Hz)
-//    SysTick_Wait(19);                // 26.3 kHz sine wave (actually 8,500 Hz)
-//    SysTick_Wait(64);                // 7.81 kHz sine wave (actually 4,800 Hz)
-//    SysTick_Wait(99);                // 5.05 kHz sine wave (actually 3,500 Hz)
-//    SysTick_Wait(1136);              // 440 Hz sine wave (actually 420 Hz)
-//    SysTick_Wait(50000);             // 10 Hz sine wave (actually 9.9 Hz)
-  }
+	song StarWars = {.tempo = 120, .notes = StarWarsNotes};
+	while(1){
+		while(play == 1){
+			PF2 ^= 0x04;
+			int wait = 60000 / StarWars.tempo;	//60000 milliseconds in a minute, divide by tempo to get
+																					//Milliseconds per beat
+			int exp = (1 << StarWars.notes[i].noteLength);	//rudimentary mapping
+			//i.e. Quarter Note: noteLength = 2. 2^2 = 4 / 4 = 1. Quarter Note gets full wait
+			//Eigth gets half wait, Half gets double, Full gets quadruple
+			
+			wait = (wait / 8) * exp;
+			wait /= 10;	//Make it compatible with SysTick_Wait10ms
+			
+			Timer0A_Init((*DAC_Out), (800000 / StarWars.notes[i].notePitch), 0);	//Interrupt at Note frequency
+			
+			i = ((i + 1) % 100);
+			if(StarWars.notes[i].noteLength == 0){
+				wait = 0;
+			}
+			SysTick_Wait10ms(wait);
+		}
+	}
+}
+
+void pauseSong(){
+	//Disable Interrupts
+	TIMER0_CTL_R = 0x00000000;    //disable TIMER0A
+	NVIC_ST_CTRL_R = 0;           //disable SysTick
+	play = 0;
+}
+
+void playSong(){
+	//Enable Interrupts
+	TIMER0_CTL_R = 0x00000001;    //enable TIMER0A
+																//enable SysTick with core clock
+	NVIC_ST_CTRL_R = NVIC_ST_CTRL_ENABLE+NVIC_ST_CTRL_CLK_SRC;
+	play = 1;
+}
+
+void rewindSong(){
+	i = 0;
+	pauseSong();
 }

@@ -32,6 +32,7 @@
 #include "Timer0A.h"
 #include "Switch.h"
 #include "../inc/tm4c123gh6pm.h"
+#inclue "PLL.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010)) //Blue LED
 
@@ -105,6 +106,7 @@ int main(void){
 	portF_Init();
   DAC_Init(0x1000);                  // initialize with command: Vout = Vref
   SysTick_Init();
+	PLL_Init(Bus80Mhz);
 	//EnableInterrupts();
 	play = 1;
 	note StarWarsNotes[100] = {	//Each measure on a different line

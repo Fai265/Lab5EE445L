@@ -445,6 +445,16 @@
               <FileType>5</FileType>
               <FilePath>.\Timer0A.h</FilePath>
             </File>
+            <File>
+              <FileName>PLL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Lab2EE445L\PLL.c</FilePath>
+            </File>
+            <File>
+              <FileName>PLL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Lab2EE445L\PLL.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

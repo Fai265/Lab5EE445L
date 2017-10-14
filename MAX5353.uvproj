@@ -448,12 +448,17 @@
             <File>
               <FileName>PLL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Lab2EE445L\PLL.c</FilePath>
+              <FilePath>..\Lab3EE445L\src\PLL.c</FilePath>
             </File>
             <File>
               <FileName>PLL.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Lab2EE445L\PLL.h</FilePath>
+              <FilePath>..\Lab3EE445L\src\PLL.h</FilePath>
+            </File>
+            <File>
+              <FileName>Music.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Music.c</FilePath>
             </File>
           </Files>
         </Group>

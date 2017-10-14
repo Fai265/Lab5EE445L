@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\MAX5353.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\MAX5353.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Mon Oct 09 11:16:42 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri Oct 13 18:03:04 2017
 <BR><P>
 <H3>Maximum Stack Usage =         36 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -592,9 +592,9 @@ Global Symbols
 
 <P><STRONG><a name="[aa]"></a>__scatterload_null</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[ab]"></a>__decompress</STRONG> (Thumb, 90 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
+<P><STRONG><a name="[ab]"></a>__decompress</STRONG> (Thumb, 100 bytes, Stack size unknown bytes, __dclz77c.o(!!dclz77c), UNUSED)
 
-<P><STRONG><a name="[ac]"></a>__decompress1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
+<P><STRONG><a name="[ac]"></a>__decompress2</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dclz77c.o(!!dclz77c), UNUSED)
 
 <P><STRONG><a name="[ad]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
 
@@ -801,7 +801,7 @@ Global Symbols
 <P><STRONG><a name="[93]"></a>PD0_Handler</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, switch.o(i.PD0_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = PD0_Handler &rArr; SysTick_Wait10ms &rArr; SysTick_Wait
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pauseSong
+<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pause_Song
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Wait10ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortD_Handler
@@ -810,7 +810,7 @@ Global Symbols
 <P><STRONG><a name="[94]"></a>PD1_Handler</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, switch.o(i.PD1_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = PD1_Handler &rArr; SysTick_Wait10ms &rArr; SysTick_Wait
 </UL>
-<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playSong
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Play_Song
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Wait10ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortD_Handler
@@ -819,7 +819,7 @@ Global Symbols
 <P><STRONG><a name="[95]"></a>PD2_Handler</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, switch.o(i.PD2_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = PD2_Handler &rArr; SysTick_Wait10ms &rArr; SysTick_Wait
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rewindSong
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rewind_Song
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Wait10ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortD_Handler
@@ -829,8 +829,25 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
+<P><STRONG><a name="[98]"></a>Pause_Song</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, music.o(i.Pause_Song))
+<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rewind_Song
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PD0_Handler
+</UL>
+
+<P><STRONG><a name="[99]"></a>Play_Song</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, music.o(i.Play_Song))
+<BR><BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PD1_Handler
+</UL>
+
 <P><STRONG><a name="[a8]"></a>Playing</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, music.o(i.Playing))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[9a]"></a>Rewind_Song</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, music.o(i.Rewind_Song))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = Rewind_Song
+</UL>
+<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pause_Song
+</UL>
+<BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PD2_Handler
 </UL>
 
 <P><STRONG><a name="[a7]"></a>Song_Index_Increment</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, music.o(i.Song_Index_Increment))
@@ -863,7 +880,7 @@ Global Symbols
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[20]"></a>Timer0A_Handler</STRONG> (Thumb, 102 bytes, Stack size 8 bytes, timer0a.o(i.Timer0A_Handler))
+<P><STRONG><a name="[20]"></a>Timer0A_Handler</STRONG> (Thumb, 116 bytes, Stack size 8 bytes, timer0a.o(i.Timer0A_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Timer0A_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
@@ -878,7 +895,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8a]"></a>main</STRONG> (Thumb, 194 bytes, Stack size 0 bytes, max5353testmain.o(i.main))
+<P><STRONG><a name="[8a]"></a>main</STRONG> (Thumb, 196 bytes, Stack size 0 bytes, max5353testmain.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
 <LI>Call Chain = main &rArr; Timer0A_Init
 </UL>
@@ -898,25 +915,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[98]"></a>pauseSong</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, music.o(i.pauseSong))
-<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rewindSong
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PD0_Handler
-</UL>
-
-<P><STRONG><a name="[99]"></a>playSong</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, music.o(i.playSong))
-<BR><BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PD1_Handler
-</UL>
-
 <P><STRONG><a name="[a0]"></a>portF_Init</STRONG> (Thumb, 88 bytes, Stack size 0 bytes, max5353testmain.o(i.portF_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[9a]"></a>rewindSong</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, music.o(i.rewindSong))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = rewindSong
-</UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pauseSong
-</UL>
-<BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PD2_Handler
 </UL>
 <P>
 <H3>

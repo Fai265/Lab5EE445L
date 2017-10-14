@@ -88,7 +88,6 @@ void DAC_InitRaw(void){
   SSI0_CR0_R &= ~(0x0000FFF0);    // SCR = 0, SPH = 0, SPO = 0 Freescale
   SSI0_CR0_R |= 0x0F;             // DSS = 16-bit data
   SSI0_CR1_R |= 0x00000002;       // enable SSI
-
 }
 //********DAC_Out*****************
 // Send data to Max5353 12-bit DAC

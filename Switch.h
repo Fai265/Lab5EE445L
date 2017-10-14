@@ -32,55 +32,72 @@ outputs:
 void Switch_Handler(int switchID);
 
 /***************************************************************
-Play()
-	Called when switch 2 is pressed, handles user input. Will 
-	cause the music to begin playing 
+GPIO_PortF_Switch_Init()
+	Initializes switch input to the TM4C123.
 
 inputs:
-	none
-	
+	int switchNum - determines which switches are activated
+	int interrupts - determines whether interrupts are activated
+
 outputs:
 	none
 ***************************************************************/
-void Play(void);
-
-/***************************************************************
-Rewind()
-	Called when switch 1 is held, handles user input. Will 
-	cause the music to go back to the beginning and wait for 
-  user to begin playing again	
-
-inputs:
-	none
-	
-outputs:
-	none
-***************************************************************/
-void Rewind(void);
-
-/***************************************************************
-Pause()
-	Called when switch 1 is pressed, handles user input. Will 
-	cause the music to go back to the beginning and wait for 
-  user to begin playing again	
-
-inputs:
-	none
-	
-outputs:
-	none
-***************************************************************/
-void Pause(void);
-
 void GPIO_PortF_Switch_Init(int switchNum, int interrupts);
 
+/***************************************************************
+GPIO_PortD_Switch_Init()
+	Initializes switch input to the TM4C123.
+
+inputs:
+	int numSwitches - determines how many switches are activated
+
+outputs:
+	none
+***************************************************************/
 void GPIO_PortD_Switch_Init(int numSwitches);
 
+/***************************************************************
+GPIO_PortD_Handler()
+	Initializes switch input to PortD.
+
+inputs:
+  none
+	
+outputs:
+	none
+***************************************************************/
 void GPIOPortD_Handler(void);
 
+/***************************************************************
+PD0_Handler()
+	Handler for interrupts on PD0
+
+inputs:
+  none
+outputs:
+	none
+***************************************************************/
 void PD0_Handler(void);
 
+/***************************************************************
+PD1_Handler()
+	Handler for interrupts on PD1
+
+inputs:
+  none
+outputs:
+	none
+***************************************************************/
 void PD1_Handler(void);
 
+/***************************************************************
+PD2_Handler()
+	Handler for interrupts on PD2
+
+inputs:
+  none
+outputs:
+	none
+***************************************************************/
 void PD2_Handler(void);
 

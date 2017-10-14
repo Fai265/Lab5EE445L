@@ -12,14 +12,14 @@ typedef int bool;
 static int songIndex=0;
 static bool play=true;
 
-void pauseSong(void){
+void Pause_Song(void){
 	//Disable Interrupts
 	TIMER0_CTL_R = 0x00000000;    //disable TIMER0A
 	//NVIC_ST_CTRL_R = 0;           //disable SysTick
 	play = 0;
 }
 
-void playSong(void){
+void Play_Song(void){
 	//Enable Interrupts
 	TIMER0_CTL_R = 0x00000001;    //enable TIMER0A
 																//enable SysTick with core clock
@@ -27,9 +27,9 @@ void playSong(void){
 	play = 1;
 }
 
-void rewindSong(void){
+void Rewind_Song(void){
 	songIndex = 0;
-	pauseSong();
+	Pause_Song();
 }
 
 bool Playing(void){

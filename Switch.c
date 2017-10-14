@@ -115,7 +115,7 @@ void PD0_Handler(void){
 	GPIO_PORTD_ICR_R |= 0x01;        // Clears interrupt on PD0
 	SysTick_Wait10ms(1);						 // debounce delay
 	GPIO_PORTD_IM_R |= 0x01;         // arm interrupt on PD0
-	pauseSong();
+	Pause_Song();
 }
 
 void PD1_Handler(void){
@@ -123,7 +123,7 @@ void PD1_Handler(void){
 	GPIO_PORTD_ICR_R |= 0x02;        // Clears interrupt on PD1
 	SysTick_Wait10ms(1);						 // debounce delay
 	GPIO_PORTD_IM_R |= 0x02;         // arm interrupt on PD1
-	playSong();
+	Play_Song();
 }
 
 void PD2_Handler(void){
@@ -131,5 +131,5 @@ void PD2_Handler(void){
 	GPIO_PORTD_ICR_R |= 0x04;        // Clears interrupt on PD2	
 	SysTick_Wait10ms(1);						 // debounce delay
 	GPIO_PORTD_IM_R |= 0x04;         // arm interrupt on PD2
-	rewindSong();
+	Rewind_Song();
 }

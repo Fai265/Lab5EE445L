@@ -29,6 +29,14 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "MAX5353.h"
 
+#define PF2             (*((volatile uint32_t *)0x40025010)) //Blue LED
+
+
+const uint16_t wave[32] = {
+  2048*2,2448*2,2832*2,3186*2,3496*2,3751*2,3940*2,4057*2,4095*2,4057*2,3940*2,
+  3751*2,3496*2,3186*2,2832*2,2448*2,2048*2,1648*2,1264*2,910*2,600*2,345*2,
+  156*2,39*2,0*2,39*2,156*2,345*2,600*2,910*2,1264*2,1648*2};
+
 const unsigned short Bassoon64[64]={
 1068, 1169, 1175, 1161, 1130, 1113, 1102, 1076, 1032, 985, 963, 987, 1082, 1343, 1737, 1863, 
 1575, 1031, 538, 309, 330, 472, 626, 807, 1038, 1270, 1420, 1461, 1375, 1201, 1005, 819, 658, 
@@ -87,12 +95,13 @@ void Timer0A_Handler(void){
   TIMER0_ICR_R = TIMER_ICR_TATOCINT;// acknowledge timer0A timeout
 	if(currentInstrument==0){
     (*PeriodicTask)(Trumpet64[i]);                // execute user task
+
 	}
 	if(currentInstrument==1){
-	  (*PeriodicTask)(Bassoon64[i]);                // execute user task
+	  (*PeriodicTask)(Bassoon64[i]/2);                // execute user task
 	}
   if(currentInstrument==2){
-		(*PeriodicTask)(Oboe64[i]);                // execute user task
+		(*PeriodicTask)(Oboe64[i]/4);                // execute user task
 	}
 	i = ((i + 1) % 64);
 }
